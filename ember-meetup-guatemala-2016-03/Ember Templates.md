@@ -5,12 +5,11 @@ Templates (Plantillas)
 - Sub-expresiones (diferencias entre `{{` y `(`)
 - Iteradores (`each`)
 - Creacion de un helper
-- Parciales, componentes y cuando usarl cada uno
-- Creacion de un componente
 - Diferencias entre `prop="foo"` y `prop=foo`
+- Parciales, componentes y cuando usar cada uno
+- Creacion de un componente
 - Helper `action`
 - Test de integracion simple
-
 
 El tema de templates requiere un conocimiento previo (aunque minimo) de los siguientes conceptos:
 
@@ -30,12 +29,12 @@ Aunque, para ser sincero, eso no es realmente util. Si queremos mejorar un poco,
 <h1>Hola Ember!</h1>
 ```
 
-Un poco mas util que la anterior, aunque sigue sin sorprendernos realmente. Subamos un poco mas el nivel:
+Un poco mas util que la anterior, aunque sigue sin sorprendernos realmente. Subamos un poco mas el nivel.
 
 ```
 <div>
-  <span>Hola {{username}}!</span>
-  <span>Bienvenido a {{meetupname}}</span>
+  <div>Hola {{model.username}}!</div>
+  <div>Bienvenido a {{meetupname}}</div>
 </div>
 ```
 
@@ -43,12 +42,12 @@ Un poco mas util que la anterior, aunque sigue sin sorprendernos realmente. Suba
 
 Aja! Se empieza a poner interesante, no? A eso se le llama un "binding" (vinculo, enlace). En un template podemos usar bindings para solicitar a ember que reemplaze, por nosotros y de forma automatica, las variables por sus respectivos valores.
 
-Asumiendo que los valores de `username` y `meetupname` son `Erick` y `Ember Meetup Guatemala`, el template de arriba nos generaria algo asi:
+Asumiendo que los valores de `model.username` y `meetupname` son `Erick` y `Ember Meetup Guatemala`, el template de arriba nos generaria algo asi:
 
 ```
 <div>
-  <span>Hola Erick!</span>
-  <span>Bienvenido a Ember Meetup Guatemala</span>
+  <div>Hola Erick!</div>
+  <div>Bienvenido a Ember Meetup Guatemala</div>
 </div>
 ```
 
@@ -64,11 +63,11 @@ Siguiendo el trabajo que llevamos en nuestro template, podemos mejorarlo de la s
 
 ```
 <div>
-  <span>Hola {{username}}!</span>
+  <div>Hola {{model.username}}!</div>
   {{#if isSignedIn}}
-    <span>Bienvenido a {{meetupname}}</span>
+    <div>Bienvenido a {{meetupname}}</div>
   {{else}}
-    <span>Inicia sesion haciendo click <button>aqui</button></span>
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
   {{/if}}
 </div>
 ```
@@ -81,11 +80,11 @@ En lugar de usar `if` podemos usar `unless` el cual es basicamente un `if not`.
 
 ```
 <div>
-  <span>Hola {{username}}!</span>
+  <div>Hola {{model.username}}!</div>
   {{#unless isSignedIn}}
-    <span>Inicia sesion haciendo click <button>aqui</button></span>
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
   {{else}}
-    <span>Bienvenido a {{meetupname}}</span>
+    <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
@@ -94,23 +93,23 @@ Para este momento el uso de `else if` deberia ser bastante obvio, pero como no m
 
 ```
 <div>
-  {{#if firstname}}
-    <span>Hola {{firstname}}!</span>
-  {{else if username}}
-    <span>Hola {{username}}!</span>
+  {{#if model.firstname}}
+    <div>Hola {{model.firstname}}!</div>
+  {{else if model.username}}
+    <div>Hola {{model.username}}!</div>
   {{else}}
-    <span>Hola Invitado!</span>
+    <div>Hola Invitado!</div>
   {{/if}}
 
   {{#unless isSignedIn}}
-    <span>Inicia sesion haciendo click <button>aqui</button></span>
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
   {{else}}
-    <span>Bienvenido a {{meetupname}}</span>
+    <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
 
-— Erick, estas siendo muy repetitivo con ese HTML, no hay mejor una forma de solo cambiar el nombre en vez de repetir todo el `span`?
+— Erick, estas siendo muy repetitivo con ese HTML, no hay mejor una forma de solo cambiar el nombre en vez de repetir todo el `div`?
 
 Claro que la hay. Los helpers, asi como los componentes (los cuales veremos mas adelante) se pueden usar de dos formas, en linea y en bloque.
 
@@ -119,15 +118,15 @@ Ya hemos visto como usar un `if` en bloque: usando `{{`, seguido de un `#` y el 
 ```
 <div>
   {{#unless isSignedIn}}
-    <span>Hola Invitado!</span>
+    <div>Hola Invitado!</div>
   {{else}}
-    <span>Hola {{if firstname firstname username}}!</span>
+    <div>Hola {{if model.firstname model.firstname model.username}}!</div>
   {{/unless}}
 
   {{#unless isSignedIn}}
-    <span>Inicia sesion haciendo click <button>aqui</button></span>
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
   {{else}}
-    <span>Bienvenido a {{meetupname}}</span>
+    <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
@@ -140,12 +139,12 @@ Si, y claro que se puede. Esto se conoce como sub-expresiones y consiste basicam
 
 ```
 <div>
-  <span>Hola {{if isSignedIn (if firstname firstname username) "Invitado"}}!</span>
+  <div>Hola {{if isSignedIn (if model.firstname model.firstname model.username) "Invitado"}}!</div>
 
   {{#unless isSignedIn}}
-    <span>Inicia sesion haciendo click <button>aqui</button></span>
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
   {{else}}
-    <span>Bienvenido a {{meetupname}}</span>
+    <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
@@ -162,23 +161,23 @@ Mejoremos un poco nuestro template asumiendo que nuestros datos incluyen tambien
 
 ```
 <div>
-  <span>Hola {{if isSignedIn (if firstname firstname username) "Invitado"}}!</span>
+  <div>Hola {{if isSignedIn (if model.firstname model.firstname model.username) "Invitado"}}!</div>
 
   {{#unless isSignedIn}}
-    <span>Inicia sesion haciendo click <button>aqui</button></span>
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
   {{else}}
-    <span>Bienvenido a {{meetupname}}</span>
+    <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 
   {{#if isSignedIn}}
     <div>
       Aqui esta tu comida favorita (en caso que se te olvide):
       <ul>
-      {{#each favoriteFood as | dishName |}}
+      {{#each model.favoriteFood as | dishName |}}
         <li>{{dishName}}</li>
       {{/each}}
       </ul>
-    <div>
+    </div>
   {{/if}}
 </div>
 ```
@@ -187,8 +186,8 @@ Asumiendo que estoy en sesion y que entre mis comidas favoritas estan: Pizzas, H
 
 ```
 <div>
-  <span>Hola Erick!</span>
-  <span>Bienvenido a Ember Meetup Guatemala</span>
+  <div>Hola Erick!</div>
+  <div>Bienvenido a Ember Meetup Guatemala</div>
 
   <div>
     Aqui esta tu comida favorita (en caso que se te olvide):
@@ -197,6 +196,7 @@ Asumiendo que estoy en sesion y que entre mis comidas favoritas estan: Pizzas, H
       <li>Hamburguesas</li>
       <li>Hot-Dogs</li>
     </ul>    
+  </div>
 </div>
 ```
 
@@ -207,3 +207,246 @@ Recapitulemos lo que hemos aprendido hasta el momento:
 - Tenemos tambien a la mano varios helpers predefinidos en Ember, como lo son `if`, `else`, `else if`, `unless`, `each`.
 - Algunos de estos helpers pueden ser usados tanto en forma de bloque, como en linea.
 - Generalmente, los helpers que pueden ser usados en linea, tambien pueden mezclarse en forma de sub-expresiones mediante el uso de `(` y `)`.
+
+Como en todo framework, el uso de las herramientas que nos provee es la mitad del trabajo, y la otra mitad es extender dichas herramientas para crear las nuestras. Este es el caso de los helpers. La creacion de un helper es bastante sencilla, basta con usar el generador que viene incluido en la herramienta de linea de comando `ember-cli`.
+
+```
+ember generate helper nombre-de-usuario
+```
+
+Este comando nos va a generar una serie de archivos necesarios para nuestro helper. Especificamente y en la version 1.13 que es la que estoy ocupando, obtendremos 2:
+
+```
+app/helpers/nombre-de-usuario.js
+tests/unit/helpers/nombre-de-usuario-test.js
+```
+
+El contenido de nuestro nuevo helper luce algo asi:
+
+```
+import Ember from 'ember';
+
+export function nombreDeUsuario(params/*, hash*/) {
+  return params;
+}
+
+export default Ember.Helper.helper(nombreDeUsuario);
+```
+
+Como lo habia comentado, un helper no es otra cosa que una function que recibe parametros y regresa un resultado en forma de cadena de texto. Podemos ver que la firma de la funcion espera dos posibles parametros, `params` y en caso que lo necesitemos `hash`.
+
+— Pero que diferencia hay entre uno y otro?
+
+Facil, `params` es equivalente a lo que en JavaScript recibimos en nuestras funciones con el nombre de `arguments`; `hash` sera un objeto con valores a los cuales podemos accesar por nombre y que ademas podemos usar para bindings. La forma en que me gusta verlo es: `params` es lo necesario para el resultado del helper (nuestro usuario) y `hash` para configurar los resultados del mismo.
+
+Hagamos nuestro helper primero con `params` solamente y despues usemos `hash`.
+
+```
+import Ember from 'ember';
+
+export function nombreDeUsuario([isSignedIn, {username, firstname}]) {
+  if (!isSignedIn) {
+    return 'Invitado';
+  }
+
+  return firstname ? firstname : username;
+}
+
+export default Ember.Helper.helper(nombreDeUsuario);
+```
+
+Y ahora podemos usarlo asi:
+
+```
+<div>Hola {{nombre-de-usuario isSignedIn model}}!</div>
+```
+
+Aunque esta version funciona bien, tenemos que recordar el orden de los parametros, y esto podria empezar a volverse un poco enredado si queremos agregar tambien un nombre opcional en lugar de 'Invitado'. Pero, como sabemos que tenemos `hash` a nuestra disposicion, usemoslo:
+
+```
+import Ember from 'ember';
+
+export function nombreDeUsuario([{username, firstname}], {isSignedIn: isSignedIn = false, guestName: guestName = 'Invitado'}) {
+  if (!isSignedIn) {
+    return guestName;
+  }
+
+  return firstname ? firstname : username;
+}
+
+export default Ember.Helper.helper(nombreDeUsuario);
+```
+
+El cual puede ser usado asi:
+
+```
+<div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn}}!</div>
+```
+
+Y tambien asi:
+
+```
+<div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
+```
+
+— Wow! Oye, porque tienes `isSignedIn=isSignedIn` sin comillas, pero `guestName='Embereño'` con comillas?
+
+Ah! Eso es porque cuando estamos agregando atributos dentro de un template, un helper o un componente tambien podemos hacer bindeos de sus valores. En este caso, estoy haciendo un bindeo de `isSignedIn` para que, cuando cambie su valor, se ejecute de nuevo el helper, y en el caso de `guestName` solo estoy pasando un string.
+
+— Asi que, cuando quiero tener un template dentro de otro template, puedo usar helpers! Eso es cool!
+
+Si... y no. Un helper no es realmente un template dentro de otro template. Si no que te ayuda a dar formato o mantener consistencia en diferentes partes de tu template y tu aplicacion. Si lo que quieres es reutilizar bloques grandes de un template en varios templates tienes otras dos opciones diferentes: `partials` y `components`.
+
+Un `partial` (plantilla parcial) es para casos sencillos, en los que quires evitar principalmente el copy & paste de un template (o una porcion del mismo) sin logica.
+
+Un ejempl de un template podria ser nuestro saludo si es que lo quicieramos usar en diferentes partes de nuestra app. Asumiendo que tomamos el siguiente bloque de HTML y lo guardamos en el archivo `app/templates/saludo.hbs` ahora podemos usarlo en cualquier template con un `{{partial 'saludo'}}`.
+
+— Y como le pasamos las variables?
+
+Ahi esta el detalle, un parcial no esta pensado para usos complejos y va a obtener acceso a las variables que esten en el template en el que lo uses, lo cual nos obligaria a tener disponible `isSignedIn` y `model` en donde lo usemos.
+
+Por otro lado, tenemos los `components` (componentes) que son mucho mas flexibles y potentes que un template aunque tambien algo mas complejos de usar (no te edivtes, no es tan complejo).
+
+Supongamos que queremos hacer un componente para la lista de mi comida favorita. Lo primero que haremos sera usar la linea de comando:
+
+```
+ember generate component comida-favorita
+```
+
+Esto nos genera los siguientes archivos:
+
+```
+app/components/comida-favorita.js
+app/templates/components/comida-favorita.hbs
+tests/integration/components/comida-favorita-test.js
+```
+
+Nuestros archivos del componente y template lucen algo asi:
+
+```
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+});
+```
+
+y asi:
+
+```
+{{yield}}
+```
+
+En el caso del JavaScrit no tiene nada especial, solo estamos extendiendo la clase componente de Ember y esta listo para la accion. En el caso del template, tiene una palabra especial `yield`. Ese `yield` lo vamos a usar solamente cuando nuestros componentes se comporten como bloqes (asi como `if` o `each`).
+
+Siguiente paso, tomar lo que tenemos en el template de la aplicacion y pasarlo al del componente:
+
+```
+<div>
+  <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
+
+  {{#unless isSignedIn}}
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
+  {{else}}
+    <div>Bienvenido a {{meetupname}}</div>
+  {{/unless}}
+
+  {{#if isSignedIn}}
+    {{comida-favorita favoriteFood=model.favoriteFood}}
+  {{/if}}
+</div>
+```
+
+```
+Aqui esta tu comida favorita (en caso que se te olvide):
+<ul>
+{{#each favoriteFood as | dishName |}}
+  <li>{{dishName}}</li>
+{{/each}}
+</ul>
+```
+
+Ahora, para poner un ejemplo de un componente de bloque, hagamos uno que oculte el contenido si nuestro usuario no esta en sesion.
+
+```
+ember generate component solo-en-sesion
+```
+
+Nuestro componente se vera asi:
+
+```
+{{#if isSignedIn}}
+  {{yield}}
+{{else}}
+  Este contenido requiere que incies sesion.
+{{/if}}
+```
+
+Y lo usaremos de la siguiente forma:
+
+```
+<div>
+  <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
+
+  {{#unless isSignedIn}}
+    <div>Inicia sesion haciendo click <button>aqui</button></div>
+  {{else}}
+    <div>Bienvenido a {{meetupname}}</div>
+  {{/unless}}
+
+  {{#solo-en-sesion isSignedIn=isSignedIn}}
+    {{comida-favorita favoriteFood=model.favoriteFood}}
+  {{/solo-en-sesion}}
+</div>
+```
+
+Los componentes no solo nos sirven como `if` con esteroides como ya lo habran imaginado. Que utilidad tendrian si no pudieramos hacer cosas mas complejas?! Para un ejemplo un poco mas elaborado, hagamos un componente para iniciar y cerrar nuestra sesion de ejemplo.
+
+```
+ember generate component control-de-sesion
+```
+
+Modificamos el template de nuestro componente para que se vea asi:
+
+```
+{{#unless isSignedIn}}
+  <div>Inicia sesion haciendo click <button {{action toggleSession}}>aqui</button></div>
+{{else}}
+  <div>Bienvenido a {{meetupname}} <button {{action toggleSession}}>cerrar sesion</button></div>
+{{/unless}}
+```
+
+Cambiamos el template de nuestra aplicacion para usar ahora el nuevo componente:
+
+```
+<div>
+  <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
+
+  {{control-de-sesion isSignedIn=isSignedIn meetupname=meetupname toggleSession=(action "iniciarCerrarSesion")}}
+
+  {{#solo-en-sesion isSignedIn=isSignedIn}}
+    {{comida-favorita favoriteFood=model.favoriteFood}}
+  {{/solo-en-sesion}}
+</div>
+```
+
+Y finalmente, algo que no hemos visto, pero que explicare a continuacion: agregaremos una accion.
+
+```
+actions: {
+  iniciarCerrarSesion() {
+    this.toggleProperty("isSignedIn");
+  },
+},
+```
+
+— Momento, momento, mas despacio cerebrito!
+
+Ok, vemos la repeticion instantanea :)
+
+Primero, movi la seccion que mostraba el boton para iniciar sesion, incluyendo el `unless` al template del componente y agregue lo que en Ember se conoce como `{{action}}` esta es la forma en la que Ember agrega `onclick` a los elementos del HTML. Tambien lo podemos usar en otros eventos que no sean `onclick`, haciendo `onblur={{action 'miFuncion'}}`.
+
+Despues, modifique el template de nuestra aplicacion para usar nuestro nuevo componente y le pase algunos valores requeridos: `isSignedIn` para saber si esta en sesion, `meetupname` para que muestre el texto correcto y `toggleSession=(action "iniciarCerrarSesion")` para controlar la accion.
+
+— Aja! Pero... tu nos explicaste `{{action}}` pero estas usando tambien `(action)`
+
+Es cierto! Esto es nuevo en Ember 1.13 y es una chulada. Antes, si querias mandar acciones desde dentro de tu componente hacia fuera del mismo, especialmente si estabas dentro de un componente que estaba dentro de otro componente (y asi sucesivamente varios niveles) tenias que recibir manualmente acciones en JavaScript y retransmitirlas en cada nivel de anidacion. Teniendo `action` como sub-expresion nos permite omitir todo esto y pasarle (injectar) la funcion directamente al componente. Con esto ademas obtenemos componentes totalmente desacoplados pues no saben ni les interesa que realizara esta accion injectada, solo se encargan de hacer su trabajo en su mundo aislado y notificar cuando han terminado.
