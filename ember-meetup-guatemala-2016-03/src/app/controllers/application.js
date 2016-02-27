@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
   actions: {
     iniciarCerrarSesion() {
-      this.toggleProperty("isSignedIn");
+      this.toggleProperty('isSignedIn');
     },
   },
 });

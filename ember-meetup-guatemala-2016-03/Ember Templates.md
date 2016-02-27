@@ -1,35 +1,35 @@
 Templates (Plantillas)
 
-- Introduccion (que son los templates, syntaxis basica)
-- Helpers logicos (`if`, `else`, `else if`, `unless`)
+- Introducción (que son los templates, sintaxis básica)
+- Helpers lógicos (`if`, `else`, `else if`, `unless`)
 - Sub-expresiones (diferencias entre `{{` y `(`)
 - Iteradores (`each`)
-- Creacion de un helper
+- Creación de un helper
 - Diferencias entre `prop="foo"` y `prop=foo`
 - Parciales, componentes y cuando usar cada uno
-- Creacion de un componente
+- Creación de un componente
 - Helper `action`
-- Test de integracion simple
+- Test de integración simple
 
-El tema de templates requiere un conocimiento previo (aunque minimo) de los siguientes conceptos:
+El tema de templates requiere un conocimiento previo (aunque mínimo) de los siguientes conceptos:
 
 - Saben que es Ember
 - Saben que es Ember CLI
 
-Toda aplicacion web, o por lo menos asi es hasta el dia de hoy, necesita de HTML. Diferentes frameworks tienen diferentes estilos para trabajar con el HTML, Backbone usa templates sensillos, Angular usa HTML, React lo pone en linea con el JavaScript, y en nuetro caso, Ember usa HTMLBars, el cual es una mejora sobre Handlebars (el cual a su ves es una mejora sobre Mustache).
+Toda aplicación Web, o por lo menos así es hasta el día de hoy, necesita de HTML. Diferentes frameworks tienen diferentes estilos para trabajar con el HTML, Backbone usa templates sencillos, Angular usa HTML, React lo pone en línea con el JavaScript, y en nuestro caso, Ember usa HTMLBars, el cual es una mejora sobre Handlebars (el cual a su ves es una mejora sobre Mustache).
 
-La forma mas sencilla de una plantilla en ember es:
+La forma mas sencilla de una plantilla en Ember es:
 
 ```
 ```
 
-Aunque, para ser sincero, eso no es realmente util. Si queremos mejorar un poco, podemos tener algo asi:
+Aunque, para ser sincero, eso no es realmente útil. Si queremos mejorar un poco, podemos tener algo así:
 
 ```
 <h1>Hola Ember!</h1>
 ```
 
-Un poco mas util que la anterior, aunque sigue sin sorprendernos realmente. Subamos un poco mas el nivel.
+Un poco mas útil que la anterior, aunque sigue sin sorprendernos realmente. Subamos un poco mas el nivel.
 
 ```
 <div>
@@ -40,9 +40,9 @@ Un poco mas util que la anterior, aunque sigue sin sorprendernos realmente. Suba
 
 — Y que es eso que esta entre `{{` y `}}`?
 
-Aja! Se empieza a poner interesante, no? A eso se le llama un "binding" (vinculo, enlace). En un template podemos usar bindings para solicitar a ember que reemplaze, por nosotros y de forma automatica, las variables por sus respectivos valores.
+Aja! Se empieza a poner interesante, no? A eso se le llama un "binding" (vinculo, enlace). En un template podemos usar bindings para solicitar a Ember que reemplace, por nosotros y de forma automática, las variables por sus respectivos valores.
 
-Asumiendo que los valores de `model.username` y `meetupname` son `Erick` y `Ember Meetup Guatemala`, el template de arriba nos generaria algo asi:
+Asumiendo que los valores de `model.username` y `meetupname` son `Erick` y `Ember Meetup Guatemala`, el template de arriba nos generaría algo así:
 
 ```
 <div>
@@ -51,13 +51,13 @@ Asumiendo que los valores de `model.username` y `meetupname` son `Erick` y `Embe
 </div>
 ```
 
-— Muy chulo eso de poner variables y que Ember nos lo cambie de forma automatica! Si esto es tan practico ya imagino que tan practico sera meter mis funciones en el template directo!
+— Muy chulo eso de poner variables y que Ember nos lo cambie de forma automática! Si esto es tan practico ya imagino que tan practico será meter mis funciones en el template directo!
 
-Emmm... no. En HTMLBars, Handlebars y en general en Mustache y otros templates se considera una mala practica el mezclar logica y HTML. Pero no esto no significa que sea el fin del mundo. Ember tiene otras herramientas para conseguir los mismos o incluso mejores resultados. Por ejemplo, que pasa si quiero controlar la visibilidad de una seccion de mi template dependiendo del valor de una variable? Para eso vamos a utilizar algo que se conoce en Ember como "Helpers" (ayudantes, asistentes).
+Emmm... no. En HTMLBars, Handlebars y en general en Mustache y otros templates se considera una mala practica el mezclar lógica y HTML. Pero no esto no significa que sea el fin del mundo. Ember tiene otras herramientas para conseguir los mismos o incluso mejores resultados. Por ejemplo, que pasa si quiero controlar la visibilidad de una sección de mi template dependiendo del valor de una variable? Para eso vamos a utilizar algo que se conoce en Ember como "Helpers" (ayudantes, asistentes).
 
-Un helper es basicamente una funcion que recibe algunos parametros y realiza alguna accion por nosotros dento del template sin tener que mezclar HTML y JavaScript.
+Un helper es básicamente una función que recibe algunos parámetros y realiza alguna acción por nosotros dentro del template sin tener que mezclar HTML y JavaScript.
 
-Algunos de los helpers que vienen ya integrados en Ember y que usaremos constantemente son los helpers de control logico (`if`, `else`, `else if`, `unless`). Con estos, podemos controlar que algo pase (o no pase) en determinadas partes de nuestro template dependiendo del estado de los datos que lo respaldan.
+Algunos de los helpers que vienen ya integrados en Ember y que usaremos constantemente son los helpers de control lógico (`if`, `else`, `else if`, `unless`). Con estos, podemos controlar que algo pase (o no pase) en determinadas partes de nuestro template dependiendo del estado de los datos que lo respaldan.
 
 Siguiendo el trabajo que llevamos en nuestro template, podemos mejorarlo de la siguiente manera:
 
@@ -67,29 +67,29 @@ Siguiendo el trabajo que llevamos en nuestro template, podemos mejorarlo de la s
   {{#if isSignedIn}}
     <div>Bienvenido a {{meetupname}}</div>
   {{else}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{/if}}
 </div>
 ```
 
-Ahora, nuestro template mostrara diferentes opciones dependiendo del valor de `isSignedIn`: Si el usuario esta en sesion, mostrara el mensaje de bienvenida, de lo contrario le dara una opcion al usuario de iniciar sesion haciendo click en un boton.
+Ahora, nuestro template mostrara diferentes opciones dependiendo del valor de `isSignedIn`: Si el usuario esta en sesión, mostrara el mensaje de bienvenida, de lo contrario le dará una opción al usuario de iniciar sesión haciendo clic en un botón.
 
 — Y que pasa si lo quiero en orden invertido?
 
-En lugar de usar `if` podemos usar `unless` el cual es basicamente un `if not`.
+En lugar de usar `if` podemos usar `unless` el cual es básicamente un `if not`.
 
 ```
 <div>
   <div>Hola {{model.username}}!</div>
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
 
-Para este momento el uso de `else if` deberia ser bastante obvio, pero como no me gusta asumir, veamos un ejemplo:
+Para este momento el uso de `else if` debería ser bastante obvio, pero como no me gusta asumir, veamos un ejemplo:
 
 ```
 <div>
@@ -102,7 +102,7 @@ Para este momento el uso de `else if` deberia ser bastante obvio, pero como no m
   {{/if}}
 
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
@@ -111,9 +111,9 @@ Para este momento el uso de `else if` deberia ser bastante obvio, pero como no m
 
 — Erick, estas siendo muy repetitivo con ese HTML, no hay mejor una forma de solo cambiar el nombre en vez de repetir todo el `div`?
 
-Claro que la hay. Los helpers, asi como los componentes (los cuales veremos mas adelante) se pueden usar de dos formas, en linea y en bloque.
+Claro que la hay. Los helpers, así como los componentes (los cuales veremos mas adelante) se pueden usar de dos formas, en línea y en bloque.
 
-Ya hemos visto como usar un `if` en bloque: usando `{{`, seguido de un `#` y el nombre del helper/componente `if` y para cerrarlo es lo mismo, solo reemplazamos el `#` por un `/`. Si nuestro helper/componente soporta el uso en lina, lo unico que aremos sera omitir el `#` y el tag de cierre. Veamos como lo hariamos con ese nombre:
+Ya hemos visto como usar un `if` en bloque: usando `{{`, seguido de un `#` y el nombre del helper/componente `if` y para cerrarlo es lo mismo, solo reemplazamos el `#` por un `/`. Si nuestro helper/componente soporta el uso en línea, lo único que aremos será omitir el `#` y el tag de cierre. Veamos como lo haríamos con ese nombre:
 
 ```
 <div>
@@ -124,54 +124,54 @@ Ya hemos visto como usar un `if` en bloque: usando `{{`, seguido de un `#` y el 
   {{/unless}}
 
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
 
-En el caso de `if` la sintaxis para usarlo en linea es: `{{if condicion valorVerdadero valorFalso}}`. El mismo orden aplica para `unless`.
+En el caso de `if` la sintaxis para usarlo en línea es: `{{if condición valorVerdadero valorFalso}}`. El mismo orden aplica para `unless`.
 
-— Y no seria genial si pudieramos de alguna forma usarlos en conjunto?
+— Y no seria genial si pudiéramos de alguna forma usarlos en conjunto?
 
-Si, y claro que se puede. Esto se conoce como sub-expresiones y consiste basicamente en reemplazar los `{{` y `}}` por `(` y `)` cuando ya estamos dentro de un binding:
+Si, y claro que se puede. Esto se conoce como sub-expresiones y consiste básicamente en reemplazar los `{{` y `}}` por `(` y `)` cuando ya estamos dentro de un binding:
 
 ```
 <div>
   <div>Hola {{if isSignedIn (if model.firstname model.firstname model.username) "Invitado"}}!</div>
 
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 </div>
 ```
 
-— Mind. Blown.
+— Mind. Blown.
 
-Lo se. Para evitar confuciones, aclaremos un poco que fue lo que paso ahi. Ya sabemos que nuestro `if` en linea recibe tres parametros: 1. condicion, 2. valor a usar si la condicion es verdadera, y 3. valor a usar si la condicion es falsa; en el template de arriba, usamos un segundo `if` como una sub-expresion cuyo resultado sera usado en caso que nuestro usuario este en sesion, de lo contrario se usara la cadena `"Invitado"`.
+Lo se. Para evitar confusiones, aclaremos un poco que fue lo que paso ahí. Ya sabemos que nuestro `if` en línea recibe tres parámetros: 1. condición, 2. valor a usar si la condición es verdadera, y 3. valor a usar si la condición es falsa; en el template de arriba, usamos un segundo `if` como una sub-expresión cuyo resultado será usado en caso que nuestro usuario este en sesión, de lo contrario se usara la cadena `"Invitado"`.
 
-Las sub-expresiones no estan limitadas al los helpers logicos, cualquier helper que se use en linea puede ser usado tambien como una sub-expresion.
+Las sub-expresiones no están limitadas al los helpers lógicos, cualquier helper que se use en línea puede ser usado también como una sub-expresión.
 
-Pero esto no termina aqui. Ember estaria muy limitado si solo tuviera estos helpers y tuvieramos nosotros que implementar otros tantos basicos. Otro helper que tambien van a usar bastante es `each`, el cual nos sirve para repetir bloques de nuestro HTML para cada elemento dentro de una coleccion (listas, tablas, etc).
+Pero esto no termina aquí. Ember estaría muy limitado si solo tuviera estos helpers y tuviéramos nosotros que implementar otros tantos básicos. Otro helper que también van a usar bastante es `each`, el cual nos sirve para repetir bloques de nuestro HTML para cada elemento dentro de una colección (listas, tablas, etc.).
 
-Mejoremos un poco nuestro template asumiendo que nuestros datos incluyen tambien un arreglo llamado `favoriteFood` con alguna de mi comida favorita:
+Mejoremos un poco nuestro template asumiendo que nuestros datos incluyen también un arreglo llamado `favoriteFood` con alguna de mi comida favorita:
 
 ```
 <div>
   <div>Hola {{if isSignedIn (if model.firstname model.firstname model.username) "Invitado"}}!</div>
 
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 
   {{#if isSignedIn}}
     <div>
-      Aqui esta tu comida favorita (en caso que se te olvide):
+      Aquí esta tu comida favorita (en caso que se te olvide):
       <ul>
       {{#each model.favoriteFood as | dishName |}}
         <li>{{dishName}}</li>
@@ -182,7 +182,7 @@ Mejoremos un poco nuestro template asumiendo que nuestros datos incluyen tambien
 </div>
 ```
 
-Asumiendo que estoy en sesion y que entre mis comidas favoritas estan: Pizzas, Hamburguesas y Hot-Dogs (yo lo se, super saludable!), El resultado seria algo asi:
+Asumiendo que estoy en sesión y que entre mis comidas favoritas están: Pizzas, Hamburguesas y Hot-Dogs (yo lo se, súper saludable!), El resultado seria algo así:
 
 ```
 <div>
@@ -190,7 +190,7 @@ Asumiendo que estoy en sesion y que entre mis comidas favoritas estan: Pizzas, H
   <div>Bienvenido a Ember Meetup Guatemala</div>
 
   <div>
-    Aqui esta tu comida favorita (en caso que se te olvide):
+    Aquí esta tu comida favorita (en caso que se te olvide):
     <ul>
       <li>Pizzas</li>
       <li>Hamburguesas</li>
@@ -202,26 +202,26 @@ Asumiendo que estoy en sesion y que entre mis comidas favoritas estan: Pizzas, H
 
 Recapitulemos lo que hemos aprendido hasta el momento:
 
-- Los templates de Ember son basicamente HTML con algunas cosas chulas gracias a HTMLBars, el cual es hijo de Handlebars y nieto de Mustache.
-- Podemos hacer bindings de variables simplemente encerrandolas entre `{{` y `}}`.
-- Tenemos tambien a la mano varios helpers predefinidos en Ember, como lo son `if`, `else`, `else if`, `unless`, `each`.
-- Algunos de estos helpers pueden ser usados tanto en forma de bloque, como en linea.
-- Generalmente, los helpers que pueden ser usados en linea, tambien pueden mezclarse en forma de sub-expresiones mediante el uso de `(` y `)`.
+- Los templates de Ember son básicamente HTML con algunas cosas chulas gracias a HTMLBars, el cual es hijo de Handlebars y nieto de Mustache.
+- Podemos hacer bindings de variables simplemente encerrándolas entre `{{` y `}}`.
+- Tenemos también a la mano varios helpers predefinidos en Ember, como lo son `if`, `else`, `else if`, `unless`, `each`.
+- Algunos de estos helpers pueden ser usados tanto en forma de bloque, como en línea.
+- Generalmente, los helpers que pueden ser usados en línea, también pueden mezclarse en forma de sub-expresiones mediante el uso de `(` y `)`.
 
-Como en todo framework, el uso de las herramientas que nos provee es la mitad del trabajo, y la otra mitad es extender dichas herramientas para crear las nuestras. Este es el caso de los helpers. La creacion de un helper es bastante sencilla, basta con usar el generador que viene incluido en la herramienta de linea de comando `ember-cli`.
+Como en todo framework, el uso de las herramientas que nos provee es la mitad del trabajo, y la otra mitad es extender dichas herramientas para crear las nuestras. Este es el caso de los helpers. La creación de un helper es bastante sencilla, basta con usar el generador que viene incluido en la herramienta de línea de comando `ember-cli`.
 
 ```
 ember generate helper nombre-de-usuario
 ```
 
-Este comando nos va a generar una serie de archivos necesarios para nuestro helper. Especificamente y en la version 1.13 que es la que estoy ocupando, obtendremos 2:
+Este comando nos va a generar una serie de archivos necesarios para nuestro helper. Específicamente y en la versión 1.13 que es la que estoy ocupando, obtendremos 2:
 
 ```
 app/helpers/nombre-de-usuario.js
 tests/unit/helpers/nombre-de-usuario-test.js
 ```
 
-El contenido de nuestro nuevo helper luce algo asi:
+El contenido de nuestro nuevo helper luce algo así:
 
 ```
 import Ember from 'ember';
@@ -233,13 +233,13 @@ export function nombreDeUsuario(params/*, hash*/) {
 export default Ember.Helper.helper(nombreDeUsuario);
 ```
 
-Como lo habia comentado, un helper no es otra cosa que una function que recibe parametros y regresa un resultado en forma de cadena de texto. Podemos ver que la firma de la funcion espera dos posibles parametros, `params` y en caso que lo necesitemos `hash`.
+Como lo había comentado, un helper no es otra cosa que una function que recibe parámetros y regresa un resultado en forma de cadena de texto. Podemos ver que la firma de la función espera dos posibles parámetros, `params` y en caso que lo necesitemos `hash`.
 
 — Pero que diferencia hay entre uno y otro?
 
-Facil, `params` es equivalente a lo que en JavaScript recibimos en nuestras funciones con el nombre de `arguments`; `hash` sera un objeto con valores a los cuales podemos accesar por nombre y que ademas podemos usar para bindings. La forma en que me gusta verlo es: `params` es lo necesario para el resultado del helper (nuestro usuario) y `hash` para configurar los resultados del mismo.
+Fácil, `params` es equivalente a lo que en JavaScript recibimos en nuestras funciones con el nombre de `arguments`; `hash` será un objeto con valores a los cuales podemos usar por nombre y que ademas podemos usar para bindings. La forma en que me gusta verlo es: `params` es lo necesario para el resultado del helper (nuestro usuario) y `hash` para configurar los resultados del mismo.
 
-Hagamos nuestro helper primero con `params` solamente y despues usemos `hash`.
+Hagamos nuestro helper primero con `params` solamente y después usemos `hash`.
 
 ```
 import Ember from 'ember';
@@ -255,13 +255,13 @@ export function nombreDeUsuario([isSignedIn, {username, firstname}]) {
 export default Ember.Helper.helper(nombreDeUsuario);
 ```
 
-Y ahora podemos usarlo asi:
+Y ahora podemos usarlo así:
 
 ```
 <div>Hola {{nombre-de-usuario isSignedIn model}}!</div>
 ```
 
-Aunque esta version funciona bien, tenemos que recordar el orden de los parametros, y esto podria empezar a volverse un poco enredado si queremos agregar tambien un nombre opcional en lugar de 'Invitado'. Pero, como sabemos que tenemos `hash` a nuestra disposicion, usemoslo:
+Aunque esta versión funciona bien, tenemos que recordar el orden de los parámetros, y esto podría empezar a volverse un poco enredado si queremos agregar también un nombre opcional en lugar de 'Invitado'. Pero, como sabemos que tenemos `hash` a nuestra disposición, usémoslo:
 
 ```
 import Ember from 'ember';
@@ -277,13 +277,13 @@ export function nombreDeUsuario([{username, firstname}], {isSignedIn: isSignedIn
 export default Ember.Helper.helper(nombreDeUsuario);
 ```
 
-El cual puede ser usado asi:
+El cual puede ser usado así:
 
 ```
 <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn}}!</div>
 ```
 
-Y tambien asi:
+Y también así:
 
 ```
 <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
@@ -291,23 +291,23 @@ Y tambien asi:
 
 — Wow! Oye, porque tienes `isSignedIn=isSignedIn` sin comillas, pero `guestName='Embereño'` con comillas?
 
-Ah! Eso es porque cuando estamos agregando atributos dentro de un template, un helper o un componente tambien podemos hacer bindeos de sus valores. En este caso, estoy haciendo un bindeo de `isSignedIn` para que, cuando cambie su valor, se ejecute de nuevo el helper, y en el caso de `guestName` solo estoy pasando un string.
+Ah! Eso es porque cuando estamos agregando atributos dentro de un template, un helper o un componente también podemos hacer bindeos de sus valores. En este caso, estoy haciendo un bindeo de `isSignedIn` para que, cuando cambie su valor, se ejecute de nuevo el helper, y en el caso de `guestName` solo estoy pasando un string.
 
-— Asi que, cuando quiero tener un template dentro de otro template, puedo usar helpers! Eso es cool!
+— Así que, cuando quiero tener un template dentro de otro template, puedo usar helpers! Eso es cool!
 
-Si... y no. Un helper no es realmente un template dentro de otro template. Si no que te ayuda a dar formato o mantener consistencia en diferentes partes de tu template y tu aplicacion. Si lo que quieres es reutilizar bloques grandes de un template en varios templates tienes otras dos opciones diferentes: `partials` y `components`.
+Si... y no. Un helper no es realmente un template dentro de otro template. Si no que te ayuda a dar formato o mantener consistencia en diferentes partes de tu template y tu aplicación. Si lo que quieres es reutilizar bloques grandes de un template en varios templates tienes otras dos opciones diferentes: `partials` y `components`.
 
-Un `partial` (plantilla parcial) es para casos sencillos, en los que quires evitar principalmente el copy & paste de un template (o una porcion del mismo) sin logica.
+Un `partial` (plantilla parcial) es para casos sencillos, en los que quieres evitar principalmente el copy & paste de un template (o una porción del mismo) sin lógica.
 
-Un ejempl de un template podria ser nuestro saludo si es que lo quicieramos usar en diferentes partes de nuestra app. Asumiendo que tomamos el siguiente bloque de HTML y lo guardamos en el archivo `app/templates/saludo.hbs` ahora podemos usarlo en cualquier template con un `{{partial 'saludo'}}`.
+Un ejemplo de un template podría ser nuestro saludo si es que lo quisiéramos usar en diferentes partes de nuestra app. Asumiendo que tomamos el siguiente bloque de HTML y lo guardamos en el archivo `app/templates/saludo.hbs` ahora podemos usarlo en cualquier template con un `{{partial 'saludo'}}`.
 
 — Y como le pasamos las variables?
 
-Ahi esta el detalle, un parcial no esta pensado para usos complejos y va a obtener acceso a las variables que esten en el template en el que lo uses, lo cual nos obligaria a tener disponible `isSignedIn` y `model` en donde lo usemos.
+Ahí esta el detalle, un parcial no esta pensado para usos complejos y va a obtener acceso a las variables que estén en el template en el que lo uses, lo cual nos obligaría a tener disponible `isSignedIn` y `model` en donde lo usemos.
 
-Por otro lado, tenemos los `components` (componentes) que son mucho mas flexibles y potentes que un template aunque tambien algo mas complejos de usar (no te edivtes, no es tan complejo).
+Por otro lado, tenemos los `components` (componentes) que son mucho mas flexibles y potentes que un template aunque también algo mas complejos de usar (no te espantes, no es tan complejo).
 
-Supongamos que queremos hacer un componente para la lista de mi comida favorita. Lo primero que haremos sera usar la linea de comando:
+Supongamos que queremos hacer un componente para la lista de mi comida favorita. Lo primero que haremos será usar la línea de comando:
 
 ```
 ember generate component comida-favorita
@@ -321,7 +321,7 @@ app/templates/components/comida-favorita.hbs
 tests/integration/components/comida-favorita-test.js
 ```
 
-Nuestros archivos del componente y template lucen algo asi:
+Nuestros archivos del componente y template lucen algo así:
 
 ```
 import Ember from 'ember';
@@ -330,22 +330,22 @@ export default Ember.Component.extend({
 });
 ```
 
-y asi:
+y así:
 
 ```
 {{yield}}
 ```
 
-En el caso del JavaScrit no tiene nada especial, solo estamos extendiendo la clase componente de Ember y esta listo para la accion. En el caso del template, tiene una palabra especial `yield`. Ese `yield` lo vamos a usar solamente cuando nuestros componentes se comporten como bloqes (asi como `if` o `each`).
+En el caso del JavaScript no tiene nada especial, solo estamos extendiendo la clase componente de Ember y esta listo para la acción. En el caso del template, tiene una palabra especial `yield`. Ese `yield` lo vamos a usar solamente cuando nuestros componentes se comporten como bloques (así como `if` o `each`).
 
-Siguiente paso, tomar lo que tenemos en el template de la aplicacion y pasarlo al del componente:
+Siguiente paso, tomar lo que tenemos en el template de la aplicación y pasarlo al del componente:
 
 ```
 <div>
   <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
 
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
@@ -357,7 +357,7 @@ Siguiente paso, tomar lo que tenemos en el template de la aplicacion y pasarlo a
 ```
 
 ```
-Aqui esta tu comida favorita (en caso que se te olvide):
+Aquí esta tu comida favorita (en caso que se te olvide):
 <ul>
 {{#each favoriteFood as | dishName |}}
   <li>{{dishName}}</li>
@@ -365,19 +365,19 @@ Aqui esta tu comida favorita (en caso que se te olvide):
 </ul>
 ```
 
-Ahora, para poner un ejemplo de un componente de bloque, hagamos uno que oculte el contenido si nuestro usuario no esta en sesion.
+Ahora, para poner un ejemplo de un componente de bloque, hagamos uno que oculte el contenido si nuestro usuario no esta en sesión.
 
 ```
-ember generate component solo-en-sesion
+ember generate component solo-en-sesión
 ```
 
-Nuestro componente se vera asi:
+Nuestro componente se vera así:
 
 ```
 {{#if isSignedIn}}
   {{yield}}
 {{else}}
-  Este contenido requiere que incies sesion.
+  Este contenido requiere que inicies sesión.
 {{/if}}
 ```
 
@@ -388,80 +388,80 @@ Y lo usaremos de la siguiente forma:
   <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
 
   {{#unless isSignedIn}}
-    <div>Inicia sesion haciendo click <button>aqui</button></div>
+    <div>Inicia sesión haciendo clic <button>aquí</button></div>
   {{else}}
     <div>Bienvenido a {{meetupname}}</div>
   {{/unless}}
 
-  {{#solo-en-sesion isSignedIn=isSignedIn}}
+  {{#solo-en-sesión isSignedIn=isSignedIn}}
     {{comida-favorita favoriteFood=model.favoriteFood}}
-  {{/solo-en-sesion}}
+  {{/solo-en-sesión}}
 </div>
 ```
 
-Los componentes no solo nos sirven como `if` con esteroides como ya lo habran imaginado. Que utilidad tendrian si no pudieramos hacer cosas mas complejas?! Para un ejemplo un poco mas elaborado, hagamos un componente para iniciar y cerrar nuestra sesion de ejemplo.
+Los componentes no solo nos sirven como `if` con asteroides como ya lo habrán imaginado. Que utilidad tendrían si no pudiéramos hacer cosas mas complejas?! Para un ejemplo un poco mas elaborado, hagamos un componente para iniciar y cerrar nuestra sesión de ejemplo.
 
 ```
-ember generate component control-de-sesion
+ember generate component control-de-sesión
 ```
 
-Modificamos el template de nuestro componente para que se vea asi:
+Modificamos el template de nuestro componente para que se vea así:
 
 ```
 {{#unless isSignedIn}}
-  <div>Inicia sesion haciendo click <button {{action toggleSession}}>aqui</button></div>
+  <div>Inicia sesión haciendo clic <button {{action toggleSession}}>aquí</button></div>
 {{else}}
-  <div>Bienvenido a {{meetupname}} <button {{action toggleSession}}>cerrar sesion</button></div>
+  <div>Bienvenido a {{meetupname}} <button {{action toggleSession}}>cerrar sesión</button></div>
 {{/unless}}
 ```
 
-Cambiamos el template de nuestra aplicacion para usar ahora el nuevo componente:
+Cambiamos el template de nuestra aplicación para usar ahora el nuevo componente:
 
 ```
 <div>
   <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
 
-  {{control-de-sesion isSignedIn=isSignedIn meetupname=meetupname toggleSession=(action "iniciarCerrarSesion")}}
+  {{control-de-sesión isSignedIn=isSignedIn meetupname=meetupname toggleSession=(action "iniciarCerrarSesion")}}
 
-  {{#solo-en-sesion isSignedIn=isSignedIn}}
+  {{#solo-en-sesión isSignedIn=isSignedIn}}
     {{comida-favorita favoriteFood=model.favoriteFood}}
-  {{/solo-en-sesion}}
+  {{/solo-en-sesión}}
 </div>
 ```
 
-Y finalmente, algo que no hemos visto, pero que explicare a continuacion: agregaremos una accion.
+Y finalmente, algo que no hemos visto, pero que explicare a continuación: agregaremos una acción.
 
 ```
 actions: {
   iniciarCerrarSesion() {
-    this.toggleProperty("isSignedIn");
+    this.toggleProperty('isSignedIn');
   },
 },
 ```
 
 — Momento, momento, mas despacio cerebrito!
 
-Ok, vemos la repeticion instantanea :)
+OK, vemos la repetición instantánea :)
 
-Primero, movi la seccion que mostraba el boton para iniciar sesion, incluyendo el `unless` al template del componente y agregue lo que en Ember se conoce como `{{action}}` esta es la forma en la que Ember agrega `onclick` a los elementos del HTML. Tambien lo podemos usar en otros eventos que no sean `onclick`, haciendo `onblur={{action 'miFuncion'}}`.
+Primero, moví la sección que mostraba el botón para iniciar sesión, incluyendo el `unless` al template del componente y agregue lo que en Ember se conoce como `{{action}}` esta es la forma en la que Ember agrega `onclick` a los elementos del HTML. También lo podemos usar en otros eventos que no sean `onclick`, haciendo `onblur={{action 'miFuncion'}}`.
 
-Despues, modifique el template de nuestra aplicacion para usar nuestro nuevo componente y le pase algunos valores requeridos: `isSignedIn` para saber si esta en sesion, `meetupname` para que muestre el texto correcto y `toggleSession=(action "iniciarCerrarSesion")` para controlar la accion.
+Despues, modifique el template de nuestra aplicación para usar nuestro nuevo componente y le pase algunos valores requeridos: `isSignedIn` para saber si esta en sesión, `meetupname` para que muestre el texto correcto y `toggleSession=(action 'iniciarCerrarSesion')` para controlar la acción.
 
-— Aja! Pero... tu nos explicaste `{{action}}` pero estas usando tambien `(action)`
+— Aja! Pero... tu nos explicaste `{{action}}` pero estas usando también `(action)`
 
-Es cierto! Esto es nuevo en Ember 1.13 y es una chulada. Antes, si querias mandar acciones desde dentro de tu componente hacia fuera del mismo, especialmente si estabas dentro de un componente que estaba dentro de otro componente (y asi sucesivamente varios niveles) tenias que recibir manualmente acciones en JavaScript y retransmitirlas en cada nivel de anidacion. Teniendo `action` como sub-expresion nos permite omitir todo esto y pasarle (injectar) la funcion directamente al componente. Con esto ademas obtenemos componentes totalmente desacoplados pues no saben ni les interesa que realizara esta accion injectada, solo se encargan de hacer su trabajo en su mundo aislado y notificar cuando han terminado.
+Es cierto! Esto es nuevo en Ember 1.13 y es una chulada. Antes, si querías mandar acciones desde dentro de tu componente hacia fuera del mismo, especialmente si estabas dentro de un componente que estaba dentro de otro componente (y así sucesivamente varios niveles) tenias que recibir manualmente acciones en JavaScript y retransmitirlas en cada nivel de anidación. Teniendo `action` como sub-expresión nos permite omitir todo esto y pasarle (inyectar) la función directamente al componente. Con esto ademas obtenemos componentes totalmente desacoplados pues no saben ni les interesa que realizara esta acción inyectada, solo se encargan de hacer su trabajo en su mundo aislado y notificar cuando han terminado.
 
 Recapitulemos nuevamente lo que hemos visto hasta ahora:
 
-- Ember CLI es nuestro pan de cada dia para nuevos archivos
-- `ember generate helper` se usa para crear nuevos helpers
-- `ember generate component` se usa para generar nuevos components
-- `{{action}}` es la forma de ember de escuchar eventos en el HTML
+- Ember CLI es nuestro pan de cada día para nuevos archivos
+- `Ember generate helper` se usa para crear nuevos helpers
+- `Ember generate component` se usa para generar nuevos components
+- `{{action}}` es la forma de Ember de escuchar eventos en el HTML
 - `(action)` se usa para inyectar funciones externas a un componente
 
-Finalmente, algo que hemos olvidado hacer desde la primera ves que usamos Ember CLI: probar nuestro codigo. Afortunadamente Ember es muy serio en cuanto a pruebas se refiere y el CLI viene listo para empezar a probar sin tener que configurar nada mas. De hecho habras notado que cada ves que usamos el CLI para generar algo, siempre se generan tambien sus archivos para tests.
+Finalmente, algo que hemos olvidado hacer desde la primera ves que usamos Ember CLI: probar nuestro código. Afortunadamente Ember es muy serio en cuanto a pruebas se refiere y el CLI viene listo para empezar a probar sin tener que configurar nada mas. De hecho habrás notado que cada ves que usamos el CLI para generar algo, siempre se generan también sus archivos para tests.
 
-Test de nombde de usuario:
+Test de nombre de usuario:
 
 ```
 test('it works', function(assert) {
@@ -486,19 +486,19 @@ test('it renders', function(assert) {
 });
 ```
 
-Test de solo en sesion:
+Test de solo en sesión:
 
 ```
 test('it renders', function(assert) {
   this.set('isSignedIn', false);
 
   this.render(hbs`
-    {{#solo-en-sesion isSignedIn=isSignedIn}}
+    {{#solo-en-sesión isSignedIn=isSignedIn}}
       Hola!
-    {{/solo-en-sesion}}
+    {{/solo-en-sesión}}
   `);
 
-  assert.equal(this.$().text().trim(), 'Este contenido requiere que incies sesion.');
+  assert.equal(this.$().text().trim(), 'Este contenido requiere que inicies sesión.');
 
   this.set('isSignedIn', true);
 
@@ -507,7 +507,7 @@ test('it renders', function(assert) {
 });
 ```
 
-Y finalmente, test de control de sesion:
+Y finalmente, test de control de sesión:
 
 ```
 test('it renders', function(assert) {

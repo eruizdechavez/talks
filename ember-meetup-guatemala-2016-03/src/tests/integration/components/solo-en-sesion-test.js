@@ -14,7 +14,7 @@ test('it renders', function(assert) {
     {{/solo-en-sesion}}
   `);
 
-  assert.equal(this.$().text().trim(), 'Este contenido requiere que incies sesion.');
+  assert.equal(this.$().text().trim(), 'Este contenido requiere que inicies sesion.');
 
   this.set('isSignedIn', true);
 
