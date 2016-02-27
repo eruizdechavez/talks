@@ -450,3 +450,88 @@ Despues, modifique el template de nuestra aplicacion para usar nuestro nuevo com
 — Aja! Pero... tu nos explicaste `{{action}}` pero estas usando tambien `(action)`
 
 Es cierto! Esto es nuevo en Ember 1.13 y es una chulada. Antes, si querias mandar acciones desde dentro de tu componente hacia fuera del mismo, especialmente si estabas dentro de un componente que estaba dentro de otro componente (y asi sucesivamente varios niveles) tenias que recibir manualmente acciones en JavaScript y retransmitirlas en cada nivel de anidacion. Teniendo `action` como sub-expresion nos permite omitir todo esto y pasarle (injectar) la funcion directamente al componente. Con esto ademas obtenemos componentes totalmente desacoplados pues no saben ni les interesa que realizara esta accion injectada, solo se encargan de hacer su trabajo en su mundo aislado y notificar cuando han terminado.
+
+Recapitulemos nuevamente lo que hemos visto hasta ahora:
+
+- Ember CLI es nuestro pan de cada dia para nuevos archivos
+- `ember generate helper` se usa para crear nuevos helpers
+- `ember generate component` se usa para generar nuevos components
+- `{{action}}` es la forma de ember de escuchar eventos en el HTML
+- `(action)` se usa para inyectar funciones externas a un componente
+
+Finalmente, algo que hemos olvidado hacer desde la primera ves que usamos Ember CLI: probar nuestro codigo. Afortunadamente Ember es muy serio en cuanto a pruebas se refiere y el CLI viene listo para empezar a probar sin tener que configurar nada mas. De hecho habras notado que cada ves que usamos el CLI para generar algo, siempre se generan tambien sus archivos para tests.
+
+Test de nombde de usuario:
+
+```
+test('it works', function(assert) {
+  assert.equal(nombreDeUsuario([{}], {}), 'Invitado', 'Nombre es Invitado');
+  assert.equal(nombreDeUsuario([{}], {guestName: 'Foo'}), 'Foo', 'Nombre es Foo');
+  assert.equal(nombreDeUsuario([{username: 'foo'}], {}), 'Invitado', 'Nombre es Invitado');
+  assert.equal(nombreDeUsuario([{username: 'foo'}], {isSignedIn: true}), 'foo', 'Nombre es foo');
+  assert.equal(nombreDeUsuario([{username: 'foo', firstname: 'Bar'}], {isSignedIn: true}), 'Bar', 'Nombre es Bar');
+});
+```
+
+Test de comida favorita:
+
+```
+test('it renders', function(assert) {
+  this.set("favoriteFood", ['Foo', 'Bar']);
+
+  this.render(hbs`{{comida-favorita favoriteFood=favoriteFood}}`);
+
+  assert.equal(this.$('li:first').text().trim(), 'Foo');
+  assert.equal(this.$('li:last').text().trim(), 'Bar');
+});
+```
+
+Test de solo en sesion:
+
+```
+test('it renders', function(assert) {
+  this.set('isSignedIn', false);
+
+  this.render(hbs`
+    {{#solo-en-sesion isSignedIn=isSignedIn}}
+      Hola!
+    {{/solo-en-sesion}}
+  `);
+
+  assert.equal(this.$().text().trim(), 'Este contenido requiere que incies sesion.');
+
+  this.set('isSignedIn', true);
+
+  assert.equal(this.$().text().trim(), 'Hola!');
+
+});
+```
+
+Y finalmente, test de control de sesion:
+
+```
+test('it renders', function(assert) {
+  let done = assert.async();
+
+  this.setProperties({
+    isSignedIn: false,
+    meetupname: 'Foo',
+    actions: {
+      testingToggle() {
+        assert.ok(true);
+        done();
+      },
+    },
+  });
+
+
+  this.render(hbs`{{control-de-sesion isSignedIn=isSignedIn meetupname=meetupname toggleSession=(action 'testingToggle')}}`);
+
+  assert.ok(this.$().text().trim().indexOf('Inicia') === 0);
+
+  this.set("isSignedIn", true);
+  assert.ok(this.$().text().trim().indexOf('Bienvenido') === 0);
+
+  this.$('button').click();
+});
+```
