@@ -1,0 +1,5 @@
+{{#unless isSignedIn}}
+  <div>Inicia sesion haciendo click <button {{action toggleSession}}>aqui</button></div>
+{{else}}
+  <div>Bienvenido a {{meetupname}} <button {{action toggleSession}}>cerrar sesion</button></div>
+{{/unless}}

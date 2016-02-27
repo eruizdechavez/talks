@@ -1,0 +1,9 @@
+<div>
+  <div>Hola {{nombre-de-usuario model isSignedIn=isSignedIn guestName='Embereño'}}!</div>
+
+  {{control-de-sesion isSignedIn=isSignedIn meetupname=meetupname toggleSession=(action "iniciarCerrarSesion")}}
+
+  {{#solo-en-sesion isSignedIn=isSignedIn}}
+    {{comida-favorita favoriteFood=model.favoriteFood}}
+  {{/solo-en-sesion}}
+</div>
