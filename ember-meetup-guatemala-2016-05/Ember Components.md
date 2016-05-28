@@ -6,6 +6,8 @@ Erick Ruiz de Chavez
 
 @eruizdechavez (GitHub, Twitter)
 
+fb.me/erickruizdechavez
+
 ---
 
 # Que es un componente?
@@ -461,7 +463,9 @@ Sin `mut`:
 En el template:
 
 ```hbs
-<button onclick={{action "toggleUser"}}>{{if mostrarComponente "Ocultar" "Mostrar"}} Usuario</button>
+<button onclick={{action "toggleUser"}}>
+  {{if mostrarComponente "Ocultar" "Mostrar"}} Usuario
+</button>
 
 {{#if mostrarComponente}}
   {{mi-componente abrirPerfil=(action abrirPerfil)}}
@@ -515,4 +519,5 @@ class: center, middle
 # Gracias
 
 https://guides.emberjs.com/v2.5.0/
+
 http://miguelcamba.com/blog/2016/01/24/ember-closure-actions-in-depth/
