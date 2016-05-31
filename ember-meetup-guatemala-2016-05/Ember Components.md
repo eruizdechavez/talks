@@ -487,7 +487,7 @@ Con `mut`:
 No mas funciones básicas para asignar!
 
 ```hbs
-*<button onclick={{action (mut "mostrarComponente") !mostrarComponente }}>
+*<button onclick={{action (mut "mostrarComponente") (not mostrarComponente) }}>
   {{if mostrarComponente "Ocultar" "Mostrar"}} Usuario
 </button>
 
