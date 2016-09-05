@@ -16,9 +16,7 @@ Say hello to everyone.
 
 Thank everyone, including organizers for the opportunity to share some time together.
 
-Today I'd like to share a bit of my story and how I got to be here, in front of you.
-
-Maybe not relevant for many of you, but still want to share it specially for those who are just starting and all of you who are from different countries.
+Today I'd like to share a bit of my story and how I got to be here, in front of you. Specially, I want to share it for those who are just starting as web developers and all of you who are from different countries.
 
 ---
 
@@ -52,9 +50,15 @@ I promise it won't take too long
 TODO: Add a big bear picture here
 
 ---
-class: center, middle
 
-Thanks to my curiosity and stuff learned on my own...
+# Around 2003
+
+- My boss asks me to create a website with dynamic content
+- I had no idea how, so I started learninr PHP & MySQL
+
+???
+
+Long story short, I did finish the site but our client cancelled the project.
 
 ---
 
@@ -72,13 +76,7 @@ Thanks to my curiosity and stuff learned on my own...
 
 ... landed a position at a company whose development team was mostly outsourced from my home town.
 
-Fun history: Job posting said JavaScript was just a "nice to have", but I ended up having to learn the basics during a test, in their office and most of my tasks where both PHP and JavaScript.
-
----
-
-class: center, middle
-
-Thanks to PHP and all previous experiences...
+Fun story: Job posting said JavaScript was just a "nice to have", but I ended up having to learn the basics during a test, in their office and most of my tasks where either 100% JavaScript or dynamic JavaScript generated with PHP.
 
 ---
 
@@ -95,15 +93,9 @@ Spoiler alert: JavaScript "will be back"
 
 ---
 
-class: center, middle
-
-Thanks to Flex and all previous experiences...
-
----
-
 # 2008
 
-- Moved 600 km, about 370 mi
+- Moved 600 km (about 370 mi)
 - LAMP + Flex
 
 ???
@@ -125,12 +117,6 @@ New projects every 4 months or so
 - Moved on-site 🇺🇸
 - Backbone.js, Node.js, MongoDB 🤔 🤓
 - 2013: Angular.js 🤔
-
----
-
-class: center, middle
-
-Thanks to Angular.js and all previous experiences...
 
 ---
 
@@ -180,14 +166,19 @@ I have no idea, but I am pretty sure I am ready to take whatever challenge comes
 - Green Card in progress
 - Met (and keep meeting) amazing people from around the world
 
+???
+
+Right now I am in a room/stage/venue full of amazing people!
+
 ---
 
 # Sharing is caring
+
 --
 
 - Keep learning
---
 
+--
 - Be open to change, don't marry with a single technology
 
 --
