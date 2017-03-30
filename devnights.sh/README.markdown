@@ -72,19 +72,92 @@ $ /opt/foo/bar/hola-mundo.sh
 
 Para hacerme la vida más fácil, yo tengo una carpeta `bin` en mi carpeta de usuario, la cual he agregado a la variable `PATH` y así en ves de tener que escribir la ruta completa y nombre del script, solo tengo que escribir el nombre, sin importar donde me encuentre actualmente. Otro de mis tips es que omito la terminación (extension) del archivo. Al estar en mi carpeta `bin` se de antemano que se trata de algún tipo de script que puedo ejecutar.
 
+Tener una serie de comandos juntos en un solo script es practico, pero tal y como lo hacemos en programación el verdadero potencial de nuestro script sale a relucir cuando empezamos a agregar variables y parámetros.
+
+Por default, dentro de cualquier cualquier script tenemos acceso a las variables de entorno del sistema, así como a unas variables especiales: `@`, `1`, `2`, etc. `@` representa todos los argumentos que nos dieron en la línea de comandos, despues del nombre de nuestro script, `1` es el primero, `2` el segundo, y así sucesivamente. Si quisiera que mi script `hola-mundo.sh` saludara al usuario por su nombre, puedo modificarlo de la siguiente manera:
+
+```sh
+#!/bin/bash
+echo "Hola $1"
+```
+
+y al ejecutar lo obtengo la siguiente salida
+
+```sh
+$ ./hola-mundo.sh Erick
+Hola Erick
+```
+
+El "problema" es que ahora, si no le paso mi nombre, solo dice "Hola". Pero esto lo podemos arreglar usando un `if`. Cabe mencionar que los `if` se escriben bastante diferente a como lo haríamos con otros lenguajes de programación. No entrare mucho a detalle en esto pues hay muy buenas guías y documentación en línea.
+
+```sh
+#!/bin/bash
+
+if [[ -z "$1" ]]; then
+  NAME=Mundo
+else
+  NAME=$1
+fi
+
+echo "Hola $NAME"
+```
+
+Ese `-z` es la forma de `bash` para probar si el string que le estamos pasando mide 0 (zero) caracteres. En caso que no le pasemos un nombre a nuestro script, la variable `NAME` se asigna el valor `Mundo`, de lo contrario, se asigna lo que le hayamos pasado; finalmente hacemos un `echo` de la cadena.
+
+Tener que recordar el orden de los parámetros que le tenemos que pasar a un script no es nada practico, tal y como pasa cuando tenemos funciones que demasiados argumentos. Para esto, existen varias herramientas que nos permiten traducir los parámetros que le hayamos pasado a nuestro script con letras, tal y como lo hacen otros comandos del sistema operativo. La que vamos a usar no requiere instalar nada pues es compatible con todos los lugares que corran `bash` pues esta integrada, y se llama `getopts`. Cabe mencionar que es básica y solo soporta parámetros "cortos" (de 1 letra).
+
+Supongamos que queremos pasar nombre y apellido. Podemos agregar los parámetros `n` para nombre y `a` para apellido. Lo cual nos da algo así:
+
+```sh
+#!/bin/bash
+
+while getopts "n:a:" opt; do
+  case $opt in
+    n) FIRST=$OPTARG ;;
+    a) LAST=$OPTARG ;;
+  esac
+done
+
+if [[ -z "$FIRST$LAST" ]]; then
+  NAME=Mundo
+else
+  NAME="$FIRST $LAST"
+fi
+
+echo "Hola $NAME"
+```
+
+Aunque la sintaxis de arriba se ve "rara", si tenemos experiencia con algún lenguaje de programación nos hará sentido lo que esta pasando en el script:
+
+`while getopts "n:a:" opt; do` - vamos a iterar cada uno de los parametros que tenemos `n:` y `a:` usando `$opts` para guardarlo (`n` o `a`). Después dentro del case, guardamos el valor con la variable especial que nos da `getopts` la cual tiene el valor actual de cada parámetro. Finalmente revisamos si tenemos algo para mostrar y sino, usamos `Mundo`.
+
+Este comando lo podemos ahora ejecutar de diferentes formas:
+
+```sh
+$ ./hola-mundo.sh
+Hola Mundo
+$ ./hola-mundo.sh -n Erick
+Hola Erick
+$ ./hola-mundo.sh -a Ruiz
+Hola  Ruiz
+$ ./hola-mundo.sh -n Erick -a Ruiz
+Hola Erick Ruiz
+$ ./hola-mundo.sh -a Ruiz -n Erick
+Hola Erick Ruiz
+```
+
+Mas información y ejemplos de `getopts`.
+
+Todos los ejemplos hasta ahora son scripts no-interactivos, esto es, les pasamos algunos parámetros y hacen las tareas sin interrumpirnos. Pero que pasa si queremos hacer un script interactivo, tal vez para hacerlo mas amigable con el usuario? Pues para estos casos también tenemos otras opciones integradas a `bash`: `read` y `select`.
+
+`read` va a recibir el input del usuario en forma de string; `select` nos permite hacer menus con opciones además de también permitir input arbitrario.
 
 
 
-
+[shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
 
 
 ---
-
-$@
-
-$1, $2, ...
-
-`getopts`
 
 `read` & `select`
 
