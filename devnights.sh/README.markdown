@@ -2,12 +2,12 @@
 
 La terminal se ha vuelto una herramienta indispensable para todo desarrollador web, sea front o back end, sea Node, JavaScript, Ruby, Python, etc. 
 
-Al inicio parece una herramienta intimidante donde no tenemos la seguridad de un dialogo confirmando "Estas seguro que quieres hacer eso?". Despues econtramos algunas herramientas que nos ayudan a mejorar nuestra terminal mostrando información extra o facilitando tareas que hacíamos a mano (alias, dotfiles, etc.). Finalmente si somos consistentes llegaremos a un punto en que la terminal se vuelve rutina, incluso llega a ser algo monótono: los mismos comandos, los mismos pasos, una y otra vez.
+Al inicio parece una herramienta intimidante donde no tenemos la seguridad de un dialogo confirmando "Estas seguro que quieres hacer eso?". Después encontramos algunas herramientas que nos ayudan a mejorar nuestra terminal mostrando información extra o facilitando tareas que hacíamos a mano (alias, dotfiles, etc.). Finalmente si somos consistentes llegaremos a un punto en que la terminal se vuelve rutina, incluso llega a ser algo monótono: los mismos comandos, los mismos pasos, una y otra vez.
 
 
 Script All The Things!
 
-Bueno, tal vez no todas, pero muchas de las tareas que realizamos en nuestro día a día es posible reducirlas o automatizarlas creando un script. En efecto, pareciera contradictorio que despues de tantas horas que hemos pasado en ella perdiéndole el miedo, tuneandola, queramos dejarla atrás y pasar menos tiempo en ella, pero esto no es lo que buscamos; lo que realmente buscamos como todo buen programador es que alguien más haga el trabajo por nosotros 😁, y quien mejor para hacerlo sin cansarse que la computadora. 
+Bueno, tal vez no todas, pero muchas de las tareas que realizamos en nuestro día a día es posible reducirlas o automatizarlas creando un script. En efecto, pareciera contradictorio que después de tantas horas que hemos pasado en ella perdiéndole el miedo, tuneandola, queramos dejarla atrás y pasar menos tiempo en ella, pero esto no es lo que buscamos; lo que realmente buscamos como todo buen programador es que alguien más haga el trabajo por nosotros 😁, y quien mejor para hacerlo sin cansarse que la computadora. 
 
 Es aquí cuando entramos al mundo del scripting. Cada sistema operativo, cada lenguaje de programación, incluso cada shell tiene sus propios estilos de scripting; hay tal variedad que pareciera otro mundo (y en cierta forma lo es). En Windows tenemos los batch files, VBScripts, el PowerShell, etc., en macOS (uno de los SO más automatizables) tenemos Apple Script, Automator, Bash, etc. en Linux, Bash es en mi opinion el rey; en todos los anteriores tenemos los diferentes lenguajes de programación como Perl, Python, Ruby, Node, PHP, Java, etc. 
 
@@ -17,7 +17,7 @@ En mi caso, mi favorito para scripting es Bash, principalmente por su portabilid
 
 A grandes rasgos, un script es una serie de instrucciones que le dicen a la computadora que haga algo. Puede ser tan sencillo como escribir texto en pantalla, o tan complejo como orquestar todo un deploy en servidores remotos, arrancar instancias, imprimir hacer backups, etc. Todo con 1 solo comando.
 
-De aquí en adelante, voy a asumir que estamos en una terminal con Bash y algún sabor de *nix (Linux, macOS, git-bash en Windows, etc).
+De aquí en adelante, voy a asumir que estamos en una terminal con Bash y algún sabor de \*nix (Linux, macOS, git-bash en Windows, etc).
 
 Para seguir con la tradición milenaria, hagamos un archivo hola-mundo.sh con nuestro `Hola mundo`:
 
@@ -32,7 +32,7 @@ La primera línea del archivo es algo que común mente se conoce como `shebang`,
 #!/usr/bin/env bash
 ```
 
-En esta línea en vez de asumir que `bash` esta directo en `/bin` lo que hacemos es preguntar a la herramienta de entorno la hubicacion de dicho programa, lo cual lo podemos hacer con cualquier otro:
+En esta línea en vez de asumir que `bash` esta directo en `/bin` lo que hacemos es preguntar a la herramienta de entorno la ubicación de dicho programa, lo cual lo podemos hacer con cualquier otro:
 
 
 ```sh
@@ -47,7 +47,7 @@ En esta línea en vez de asumir que `bash` esta directo en `/bin` lo que hacemos
 #!/usr/bin/env node
 ```
 
-Despues de dicha línea, lo que hacemos es empezar con nuestras instrucciones, en nuestro caso, un simple `echo`.
+Después de dicha línea, lo que hacemos es empezar con nuestras instrucciones, en nuestro caso, un simple `echo`.
 
 Antes de poder ejecutar este archivo, debemos darle permisos de ejecución. Esto se consigue (y solo se require 1 vez) con el comando `chmod`.
 
@@ -74,7 +74,7 @@ Para hacerme la vida más fácil, yo tengo una carpeta `bin` en mi carpeta de us
 
 Tener una serie de comandos juntos en un solo script es practico, pero tal y como lo hacemos en programación el verdadero potencial de nuestro script sale a relucir cuando empezamos a agregar variables y parámetros.
 
-Por default, dentro de cualquier cualquier script tenemos acceso a las variables de entorno del sistema, así como a unas variables especiales: `@`, `1`, `2`, etc. `@` representa todos los argumentos que nos dieron en la línea de comandos, despues del nombre de nuestro script, `1` es el primero, `2` el segundo, y así sucesivamente. Si quisiera que mi script `hola-mundo.sh` saludara al usuario por su nombre, puedo modificarlo de la siguiente manera:
+Por default, dentro de cualquier cualquier script tenemos acceso a las variables de entorno del sistema, así como a unas variables especiales: `@`, `1`, `2`, etc. `@` representa todos los argumentos que nos dieron en la línea de comandos, después del nombre de nuestro script, `1` es el primero, `2` el segundo, y así sucesivamente. Si quisiera que mi script `hola-mundo.sh` saludara al usuario por su nombre, puedo modificarlo de la siguiente manera:
 
 ```sh
 #!/bin/bash
@@ -146,7 +146,7 @@ $ ./hola-mundo.sh -a Ruiz -n Erick
 Hola Erick Ruiz
 ```
 
-Mas información y ejemplos de `getopts`.
+En este link hay mas información sobre [getopts].
 
 Todos los ejemplos hasta ahora son scripts no-interactivos, esto es, les pasamos algunos parámetros y hacen las tareas sin interrumpirnos. Pero que pasa si queremos hacer un script interactivo, tal vez para hacerlo mas amigable con el usuario? Pues para estos casos también tenemos otras opciones integradas a `bash`: `read` y `select`.
 
@@ -155,7 +155,7 @@ Todos los ejemplos hasta ahora son scripts no-interactivos, esto es, les pasamos
 
 
 [shebang]: https://en.wikipedia.org/wiki/Shebang_(Unix)
-
+[getopts]: http://wiki.bash-hackers.org/howto/getopts_tutorial
 
 ---
 
@@ -164,10 +164,6 @@ Todos los ejemplos hasta ahora son scripts no-interactivos, esto es, les pasamos
 `echo` & `printf`
 
 `awk`
-
-Functions
-
-Import files
 
 CocoaDialog
 
